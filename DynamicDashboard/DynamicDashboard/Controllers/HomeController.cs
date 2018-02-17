@@ -10,7 +10,7 @@ namespace DynamicDashboard.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "DashBord";
 
             return View();
         }
