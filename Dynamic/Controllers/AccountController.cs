@@ -72,7 +72,12 @@ namespace Dynamic.Controllers
             {
                 return View(model);
             }
-
+            var user = UserManager.FindByEmail(model.Email);
+            if (!user.EmailConfirmed)
+            {
+                ModelState.AddModelError("", "Kullanıcı onaylanmamış");
+                return View(model);
+            }
             // Hesap kilitlenirken oturum açma hataları hesaplanmaz
             // Parola hatalarının hesap kilitlenmesini tetiklemesini sağlmak için değeri shouldLockout: true olarak değiştirin
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -151,11 +156,11 @@ namespace Dynamic.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,EmailConfirmed=false };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:true);
                     
                     // Hesap onayını ve parola sıfırlamayı etkinleştirme hakkında daha fazla bilgi için lütfen https://go.microsoft.com/fwlink/?LinkID=320771 adresini ziyaret edin.
                     // Bu bağlantı ile bir e-posta yollayın
@@ -211,10 +216,10 @@ namespace Dynamic.Controllers
 
                 // Hesap onayını ve parola sıfırlamayı etkinleştirme hakkında daha fazla bilgi için lütfen https://go.microsoft.com/fwlink/?LinkID=320771 adresini ziyaret edin.
                 // Bu bağlantı ile bir e-posta yollayın
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Parola Sıfırlama", "Lütfen parolanızı sıfırlamak için <a href=\"" + callbackUrl + "\">buraya tıklayın</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Parola Sıfırlama", "Lütfen parolanızı sıfırlamak için <a href=\"" + callbackUrl + "\">buraya tıklayın</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // İşlemde bu kadar ilerlendiyse, hata oluşmuş demektir, formu yeniden görüntüleyin

@@ -29,5 +29,6 @@ namespace Dynamic.Models
         {
             return new ApplicationDbContext();
         }
+        public DbSet<Dashboard> Dashboards{ get; set; }
     }
 }

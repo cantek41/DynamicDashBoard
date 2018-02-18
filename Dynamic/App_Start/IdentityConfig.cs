@@ -11,15 +11,40 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Dynamic.Models;
+using System.Net;
+using System.Net.Mail;
+
 
 namespace Dynamic
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        
+
+        public async Task SendAsync(IdentityMessage message)
         {
+            //TODO: mail bilgileri web configden gelmeli
+
+            MailMessage ePosta = new MailMessage();
+            ePosta.From = new MailAddress("************");
+
+            ePosta.To.Add(message.Destination);
+            ePosta.Subject = "Limon Ticaret Parola Sıfırlama";
+            ePosta.Body = message.Body;
+
+            SmtpClient smtp = new SmtpClient();
+
+            smtp.Credentials = new System.Net.NetworkCredential("*******", "*****");
+            
+            smtp.Port = 587;
+
+            smtp.Host = "************";
+
+            smtp.EnableSsl = true;
+
+            smtp.SendAsync(ePosta, (object)ePosta);
             // E-posta göndermek için e-posta hizmetinizi buraya bağlayın.
-            return Task.FromResult(0);
+            //   return Task.FromResult(0);
         }
     }
 
@@ -54,10 +79,10 @@ namespace Dynamic
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
+                RequireNonLetterOrDigit = false,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                RequireUppercase = false,
             };
 
             // Kullanıcı kilitleme varsayılanlarını yapılandırın
