@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Dynamic.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -19,8 +19,9 @@ namespace Dynamic.Controllers
         }
 
         ApplicationDbContext db = new ApplicationDbContext();
-        public JArray getChart()
+        public JArray getChart(string val)
         {
+            //TODO: gelen valu sql e eklenecek
             var charts = db.Dashboards.OrderBy(x => x.Order).ToList();
             var result = new JArray();
             foreach (var item in charts)
