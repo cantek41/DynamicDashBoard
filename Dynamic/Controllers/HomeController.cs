@@ -22,12 +22,12 @@ namespace Dynamic.Controllers
         public JArray getChart(string val)
         {
             //TODO: gelen valu sql e eklenecek
-            var charts = db.Dashboards.OrderBy(x => x.Order).ToList();
+            var charts = db.Dashboards.OrderBy(x => x.Order).ToList();            
             var result = new JArray();
             foreach (var item in charts)
             {
                 var row = new JObject();
-                var data = DataService.getService(db).ExecuteSqlQueryJson(item.SQL);
+                var data = DataService.getService(db).ExecuteSqlQueryJson(item.SQL.Replace("@value",val));
                 row.Add("Id", item.Id);
                 row.Add("Order", item.Order);
                 row.Add("Title", item.Title);

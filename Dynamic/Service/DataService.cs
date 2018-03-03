@@ -17,7 +17,7 @@ namespace Dynamic.Service
         {
             if (_service == null)
                 _service = new DataService();
-            context = _context;
+            context = new ApplicationDbContext();
             return _service;
         }
         private DataService()

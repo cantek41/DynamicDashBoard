@@ -1,42 +1,131 @@
 ﻿@{
+
     ViewBag.Title = "Home Page";
+
 }
 
-<my-app>aa</my-app>
-<div class="row">
-    <input />
-    <button>Getir</button>
-</div>
+<br />
+
+<br />
+
+
 
 <div class="row">
-    <table class="table">
+
+    <h3>Nebim V3 Ürün Sorgula</h3>
+
+    <form onsubmit="return dataGetir()">
+
+        <input id="barcode" />
+
+        <button type="submit">Gönder</button>
+
+    </form>
+
+</div>
+
+<br />
+
+<br />
+
+
+
+<script>
+
+    function dataGetir() {
+
+        var data = $('#barcode').val();
+
+        $.ajax({
+
+            type: "POST",
+
+            url: "home/getChart",
+
+            data: { val: data },
+
+            dataType: "json",
+
+            success: function (result) {
+
+                $("#Tables").empty();
+
+                for (var j = 0; j < result.length; j++) {
+
+                    $("#myTable").clone().appendTo("#Tables");
+
+                    if (result[j].Data.length == 0)
+
+                        continue;
+
+                    obj = result[j].Data[0];
+
+                    $('#baslik').empty();
+
+                    $('#databody').empty();
+
+
+
+                    Object.keys(obj).forEach(function (k) {
+
+                        $('#baslik').append('<th scope="col">' + k + '</th>');
+
+                    });
+
+                    for (var i = 0; i < result[j].Data.length; i++) {
+
+                        row = "<tr>";
+
+                        var dd = result[j].Data[i];
+
+                        Object.keys(dd).forEach(function (k) {
+
+                            console.log(dd[k]);
+
+                            row += '<td>' + dd[k] + '</td>';
+
+                        });
+
+                        row += "</tr>";
+
+                        $('#databody').append(row);
+
+                    }
+
+                }
+
+
+
+            }
+
+        });
+
+
+
+        $('#barcode').val('');
+
+        return false;
+
+    }
+
+</script>
+
+<div class="row" id="Tables">
+
+</div>
+
+<div hidden>
+
+    <table id="myTable" class="table myTable">
+
         <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
+
+            <tr id="baslik" class="baslik"></tr>
+
         </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>twitter</td>
-            </tr>
-        </tbody>
+
+        <tbody id="databody" class="databody"></tbody>
+
     </table>
+
 </div>
