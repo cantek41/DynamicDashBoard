@@ -25,7 +25,10 @@ namespace Dynamic
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/node_modules/font-awesome/css/font-awesome.min.css",
+                      "~/node_modules/primeng/resources/themes/omega/theme.css",
+                      "~/node_modules/primeng/resources/primeng.min.css"));
         }
     }
 }

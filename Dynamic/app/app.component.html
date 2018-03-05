@@ -1,0 +1,15 @@
+﻿<div class="row">
+    <p>
+        <input type="text" class="form-control" style="display:inline-block" [(ngModel)]="id">
+        <a class="btn btn-default" (click)="this.findId()">
+            <span class="glyphicon glyphicon-search"></span> Arama
+        </a>
+    </p>
+</div>
+<div class="row" *ngFor="let item of data;let i=index" style="padding:6px;">
+    <p-dataTable [value]="item.Data">
+        <p-column *ngFor="let col of item.cols" [field]="col.field" [header]="col.header"></p-column>
+    </p-dataTable>
+
+</div>
+
