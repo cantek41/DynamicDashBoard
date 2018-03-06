@@ -9,7 +9,7 @@
 <div class="row" *ngFor="let item of data;let i=index" style="padding:6px;">
     <p-dataTable [value]="item.Data" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
         <p-header>{{item.Title}}</p-header>
-        <p-column *ngFor="let col of item.cols" [field]="col.field" [header]="col.header"></p-column>
+        <p-column *ngFor="let col of item.cols" [field]="col.field" [header]="col.header" [style]="{'width':'80px'}"></p-column>
     </p-dataTable>
 </div>
 

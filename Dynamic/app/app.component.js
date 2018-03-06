@@ -13,41 +13,13 @@ var core_1 = require("@angular/core");
 var base_service_1 = require("./services/base.service");
 var AppComponent = /** @class */ (function () {
     function AppComponent(baseService) {
+        //this.baseService.getDataAll(this.id).subscribe((data) => {
+        //    //console.log(data);
+        //    //this.data = data;
+        //    console.log(data);
         this.baseService = baseService;
         this.name = 'Angular';
-        this.data = [
-            {
-                "Id": 2,
-                "Order": 1,
-                "Title": "Deneme",
-                "Type": "GRID",
-                "ColWidth": "",
-                "cols": [
-                    { field: 'Id', header: 'Id' },
-                    { field: 'Type', header: 'Type' },
-                    { field: 'Order', header: 'Order' },
-                    { field: 'Title', header: 'Title' },
-                    { field: 'ColWidth', header: 'ColWidth' }
-                ],
-                "Data": [
-                    {
-                        "Id": 2,
-                        "Type": 0,
-                        "Order": 1,
-                        "Title": "Deneme",
-                        "SQL": "Select * from Dashboards",
-                        "ColWidth": ""
-                    },
-                    {
-                        "Id": 3,
-                        "Type": 0,
-                        "Order": 2,
-                        "Title": "K,,,,,,,so",
-                        "SQL": "SELECT    *  FROM  [KSO_OTOMASYON]..BildirimTurus",
-                        "ColWidth": ""
-                    }
-                ]
-            },
+        this.data1 = [
             {
                 "Id": 3,
                 "Order": 2,
@@ -113,13 +85,39 @@ var AppComponent = /** @class */ (function () {
                 ]
             }
         ];
+        //    for (var i = 0; i < data.length; i++) {
+        //        let cols = new Array();
+        //        var keynames = Object.keys(data[i].Data[0]);
+        //        for (var j = 0; j < keynames.length; j++) {
+        //            let item = {
+        //                field: keynames[j],
+        //                header: keynames[j]
+        //            }
+        //            cols.push(item);
+        //        }
+        //        data[i]["cols"] = cols;
+        //        //console.log(cols);
+        //        //console.log("--------------------");
+        //    }
+        //    console.log(data);
+        //})
     }
     AppComponent.prototype.findId = function () {
         var _this = this;
         this.baseService.getDataAll(this.id).subscribe(function (data) {
-            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                var cols = new Array();
+                var keynames = Object.keys(data[i].Data[0]);
+                for (var j = 0; j < keynames.length; j++) {
+                    var item = {
+                        field: keynames[j],
+                        header: keynames[j]
+                    };
+                    cols.push(item);
+                }
+                data[i]["cols"] = cols;
+            }
             _this.data = data;
-            console.log(_this.data);
         });
     };
     AppComponent = __decorate([

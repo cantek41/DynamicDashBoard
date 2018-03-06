@@ -8,40 +8,10 @@ import { BaseService } from './services/base.service';
 export class AppComponent  {
     name = 'Angular';
     id: string;
-    data=[
-    {
-    "Id": 2,
-    "Order": 1,
-    "Title": "Deneme",
-    "Type": "GRID",
-    "ColWidth": "",
-    "cols": [
-        { field: 'Id', header: 'Id' },
-        { field: 'Type', header: 'Type' },
-        { field: 'Order', header: 'Order' },
-        { field: 'Title', header: 'Title' },
-        { field: 'ColWidth', header: 'ColWidth' }
-
-    ],
-    "Data": [
-      {
-        "Id": 2,
-        "Type": 0,
-        "Order": 1,
-        "Title": "Deneme",
-        "SQL": "Select * from Dashboards",
-        "ColWidth": ""
-      },
-      {
-        "Id": 3,
-        "Type": 0,
-        "Order": 2,
-        "Title": "K,,,,,,,so",
-        "SQL": "SELECT    *  FROM  [KSO_OTOMASYON]..BildirimTurus",
-        "ColWidth": ""
-      }
-    ]
-  },
+    data: any[];
+  
+    data1=[
+   
   {
     "Id": 3,
     "Order": 2,
@@ -113,14 +83,46 @@ export class AppComponent  {
    
    
     constructor(private baseService: BaseService) {
+        //this.baseService.getDataAll(this.id).subscribe((data) => {
+        //    //console.log(data);
+        //    //this.data = data;
+        //    console.log(data);
+           
+        //    for (var i = 0; i < data.length; i++) {
+        //        let cols = new Array();
+        //        var keynames = Object.keys(data[i].Data[0]);
+        //        for (var j = 0; j < keynames.length; j++) {
+        //            let item = {
+        //                field: keynames[j],
+        //                header: keynames[j]
+        //            }
+        //            cols.push(item);
+                  
+        //        }
+        //        data[i]["cols"] = cols;
+        //        //console.log(cols);
+        //        //console.log("--------------------");
+        //    }
 
+        //    console.log(data);
+        //})
     }
 
     findId() {
         this.baseService.getDataAll(this.id).subscribe((data) => {
-            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                let cols = new Array();
+                var keynames = Object.keys(data[i].Data[0]);
+                for (var j = 0; j < keynames.length; j++) {
+                    let item = {
+                        field: keynames[j],
+                        header: keynames[j]
+                    }
+                    cols.push(item);
+                }
+                data[i]["cols"] = cols;
+            }
             this.data = data;
-            console.log(this.data);
         })
     }
 }
