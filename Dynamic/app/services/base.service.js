@@ -15,7 +15,7 @@ require("rxjs/add/operator/map");
 var BaseService = /** @class */ (function () {
     function BaseService(http) {
         this.http = http;
-        console.log("Sevice work");
+        //console.log("Sevice work");
     }
     BaseService.prototype.getDataAll = function (id) {
         return this.http.post("home/getChart", { val: id })

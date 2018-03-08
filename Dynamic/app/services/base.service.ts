@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 export class BaseService {
 
     constructor(public http: Http) {
-        console.log("Sevice work");
+        //console.log("Sevice work");
     }
 
     getDataAll(id: string) {
