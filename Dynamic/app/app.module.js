@@ -27,6 +27,7 @@ var AppModule = /** @class */ (function () {
                 animations_1.BrowserAnimationsModule,
                 forms_1.FormsModule,
                 http_1.HttpModule,
+                primeng_1.ButtonModule,
                 primeng_1.DataTableModule,
             ],
             declarations: [

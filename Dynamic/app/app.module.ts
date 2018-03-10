@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 //PrimeNg
-import { DataTableModule } from 'primeng/primeng'; 
+import { ButtonModule,DataTableModule } from 'primeng/primeng'; 
 
 //Component
 import { AppComponent }  from './app.component';
@@ -18,6 +18,7 @@ import { BaseService } from './services/base.service';
         BrowserAnimationsModule,
         FormsModule,
         HttpModule,
+        ButtonModule,
         DataTableModule,
     ],
     declarations: [

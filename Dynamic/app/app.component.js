@@ -14,12 +14,17 @@ var base_service_1 = require("./services/base.service");
 var AppComponent = /** @class */ (function () {
     function AppComponent(baseService) {
         this.baseService = baseService;
+        this.aa = "80%";
     }
     // Json Olarak gelen data cols[{field:'Id',header:'Id'}] olarak proport ekler
     AppComponent.prototype.addProporty = function (data) {
         for (var i = 0; i < data.length; i++) {
             var cols = new Array();
             var keynames = Object.keys(data[i].Data[0]);
+            if (data[i].ColWidth != "") {
+                data[i].ColWidth = data[i].ColWidth.split(";");
+                console.log("ColWidth bo� de�il");
+            }
             for (var j = 0; j < keynames.length; j++) {
                 var item = {
                     field: keynames[j],
@@ -36,6 +41,7 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         this.baseService.getDataAll(this.id).subscribe(function (data) {
             _this.data = _this.addProporty(data);
+            console.log(_this.data);
         });
     };
     AppComponent = __decorate([

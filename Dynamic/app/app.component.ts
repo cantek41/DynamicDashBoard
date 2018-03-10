@@ -20,6 +20,12 @@ export class AppComponent  {
         for (var i = 0; i < data.length; i++) {
             let cols = new Array();
             var keynames = Object.keys(data[i].Data[0]);
+           
+
+            if (data[i].ColWidth != "") {
+                data[i].ColWidth = data[i].ColWidth.split(";");
+            }
+
             for (var j = 0; j < keynames.length; j++) {
                 let item = {
                     field: keynames[j],
@@ -37,6 +43,7 @@ export class AppComponent  {
     findId() {
         this.baseService.getDataAll(this.id).subscribe((data) => {
             this.data = this.addProporty(data);
+            console.log(this.data);
         })
     }
 
